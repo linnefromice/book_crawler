@@ -9,9 +9,11 @@ const xml = `<items>
 const main = () => {
     parseString(xml, (err, r) => {
         console.log(JSON.stringify(r));
-        console.log("---");
-        console.log(r.items.item[0].name[0]);
-        console.log(r.items.item[0].price[0]);
+        r.items.item.forEach(element => {
+            console.log("---");
+            console.log(element.name[0]);
+            console.log(element.price[0]);    
+        });
     });
 }
 
