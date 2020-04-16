@@ -1,0 +1,12 @@
+{
+  "name": "node-ibmjp-patterns",
+  "version": "1.0.0",
+  "description": "- [Node.js で簡単なクローラーを作成してWeb サイトの情報を得る](https://qiita.com/yamachan360/items/3ee48de81394db9d3063)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
