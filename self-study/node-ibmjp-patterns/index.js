@@ -14,6 +14,8 @@ const getListUrl = (_page) => {
     }
 }
 
+const list_item_selector = '.ibm-card';
+
 const roopPages = () => {
     let page = 1;
     do {
@@ -23,7 +25,12 @@ const roopPages = () => {
             console.log(`ERROR: ${url}`);
             return;
         } else {
-            console.log(`Page${page}: ${result.response.headers["content-type"]}`);
+            let items = result.$(list_item_selector);
+            console.log(`Page${page}: ${items.length}`);
+            for (let index = 0; index < items.length; index++) {
+                const text = result.$('.ibm-card__content h3', items[index]).text().trim();
+                console.log(text);
+            }
             page++;
         }
     } while (page <= 16);
