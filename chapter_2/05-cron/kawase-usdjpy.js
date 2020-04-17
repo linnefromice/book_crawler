@@ -9,7 +9,13 @@ const main = () => {
       return;
     }
     const data = JSON.parse(body);
-    console.log(data.quotes[0]);
+    console.log(data.quotes.length);
+    data.quotes.forEach(element => {
+      if (element.currencyPairCode == 'USDJPY') {
+        console.log(element);
+        return;
+      }
+    });
   });
 }
 
