@@ -3,7 +3,7 @@ const nedb = require('nedb');
 const datastore = require('nedb-promise');
 
 const nedb_file_name = 'list-ibmjp-patterns.nedb.json';
-const db = datastore({
+const DB = datastore({
     file_name: nedb_file_name,
     autoload: true
 });
@@ -24,7 +24,7 @@ const getListUrl = (_page) => {
 
 const list_item_selector = '.developer--card';
 
-const roopPages = () => {
+const roopPages = async () => {
     let page = 1;
     let isContinue = true;
     let countOfItems = 0;
@@ -48,7 +48,8 @@ const roopPages = () => {
                         url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
                         data: result.$('.developer--card__date', items[index]).text().trim(),
                     }
-                    console.log(obj);
+                    // console.log(obj);
+                    await DB.insert(obj);
                 }
                 page++;
             }
@@ -59,7 +60,11 @@ const roopPages = () => {
 
 const main = async () => {
     console.log(information_message);
-    roopPages();
+    await roopPages();
+    const allData = await DB.cfind({}).exec();
+    allData.forEach(element => {
+        console.log(element);
+    });
 }
 
 main();
