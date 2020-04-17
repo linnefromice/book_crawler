@@ -28,8 +28,11 @@ const roopPages = () => {
             let items = result.$(list_item_selector);
             console.log(`Page${page}: ${items.length}`);
             for (let index = 0; index < items.length; index++) {
-                const text = result.$('.developer--card__title span', items[index]).text().trim();
-                console.log(text);
+                const obj = {
+                    title: result.$('.developer--card__title span', items[index]).text().trim(),
+                    url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
+                }
+                console.log(obj);
             }
             page++;
         }
