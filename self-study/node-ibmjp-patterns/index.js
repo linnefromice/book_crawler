@@ -46,7 +46,7 @@ const roopPages = async () => {
                     const obj = {
                         title: result.$('.developer--card__title span', items[index]).text().trim(),
                         url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
-                        data: result.$('.developer--card__date', items[index]).text().trim(),
+                        date: result.$('.developer--card__date', items[index]).text().trim(),
                     }
                     // console.log(obj);
                     await DB.insert(obj);
@@ -61,7 +61,12 @@ const roopPages = async () => {
 const main = async () => {
     console.log(information_message);
     await roopPages();
-    const allData = await DB.cfind({}).exec();
+    const allData = await DB.cfind({}).projection({
+        title: 1,
+        url: 1,
+        date: 1,
+        _id: 0
+    }).exec();
     allData.forEach(element => {
         console.log(element);
     });
