@@ -31,6 +31,7 @@ const roopPages = () => {
                 const obj = {
                     title: result.$('.developer--card__title span', items[index]).text().trim(),
                     url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
+                    data: result.$('.developer--card__date', items[index]).text().trim(),
                 }
                 console.log(obj);
             }
