@@ -18,6 +18,8 @@ const list_item_selector = '.developer--card';
 
 const roopPages = () => {
     let page = 1;
+    let isContinue = true;
+    let countOfItems = 0;
     do {
         let url = getListUrl(page);
         let result = client.fetchSync(url);
@@ -25,25 +27,31 @@ const roopPages = () => {
             console.log(`ERROR: ${url}`);
             return;
         } else {
-            let items = result.$(list_item_selector);
-            console.log(`Page${page}: ${items.length}`);
-            for (let index = 0; index < items.length; index++) {
-                const obj = {
-                    title: result.$('.developer--card__title span', items[index]).text().trim(),
-                    url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
-                    data: result.$('.developer--card__date', items[index]).text().trim(),
+            const items = result.$(list_item_selector);
+            const numberOfItems = items.length;
+            if (numberOfItems == 0) {
+                isContinue = false;
+            } else {
+                console.log(`Page${page}: ${numberOfItems}`);
+                countOfItems += numberOfItems;
+                for (let index = 0; index < items.length; index++) {
+                    const obj = {
+                        title: result.$('.developer--card__title span', items[index]).text().trim(),
+                        url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
+                        data: result.$('.developer--card__date', items[index]).text().trim(),
+                    }
+                    console.log(obj);
                 }
-                console.log(obj);
+                page++;
             }
-            page++;
         }
-    } while (page <= 16);
+    } while (isContinue);
+    console.log(`COUNT OF ITEMS: ${countOfItems}`);
 }
 
 const main = () => {
     console.log(information_message);
     roopPages();
-    return;
 }
 
 main();
