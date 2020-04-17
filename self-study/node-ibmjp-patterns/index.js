@@ -1,4 +1,12 @@
 const client = require('cheerio-httpcli');
+const nedb = require('nedb');
+const datastore = require('nedb-promise');
+
+const nedb_file_name = 'list-ibmjp-patterns.nedb.json';
+const db = datastore({
+    file_name: nedb_file_name,
+    autoload: true
+});
 
 const information_message = `
 Simple crawler tool to list patterns from IBM Code JP site.
@@ -49,7 +57,7 @@ const roopPages = () => {
     console.log(`COUNT OF ITEMS: ${countOfItems}`);
 }
 
-const main = () => {
+const main = async () => {
     console.log(information_message);
     roopPages();
 }
