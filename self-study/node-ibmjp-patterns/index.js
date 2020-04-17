@@ -14,7 +14,7 @@ const getListUrl = (_page) => {
     }
 }
 
-const list_item_selector = '.ibm-card';
+const list_item_selector = '.developer--card';
 
 const roopPages = () => {
     let page = 1;
@@ -28,7 +28,7 @@ const roopPages = () => {
             let items = result.$(list_item_selector);
             console.log(`Page${page}: ${items.length}`);
             for (let index = 0; index < items.length; index++) {
-                const text = result.$('.ibm-card__content h3', items[index]).text().trim();
+                const text = result.$('.developer--card__title span', items[index]).text().trim();
                 console.log(text);
             }
             page++;
