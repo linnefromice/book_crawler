@@ -24,6 +24,18 @@ const getListUrl = (_page) => {
 
 const list_item_selector = '.developer--card';
 
+const extractHtmlFactors = async (result, items) => {
+    for (let index = 0; index < items.length; index++) {
+        const obj = {
+            title: result.$('.developer--card__title span', items[index]).text().trim(),
+            url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
+            date: result.$('.developer--card__date', items[index]).text().trim(),
+        }
+        // console.log(obj);
+        await DB.insert(obj);
+    }
+}
+
 const roopPages = async () => {
     let page = 1;
     let isContinue = true;
@@ -42,15 +54,7 @@ const roopPages = async () => {
             } else {
                 console.log(`Page${page}: ${numberOfItems}`);
                 countOfItems += numberOfItems;
-                for (let index = 0; index < items.length; index++) {
-                    const obj = {
-                        title: result.$('.developer--card__title span', items[index]).text().trim(),
-                        url: `https://developer.ibm.com${result.$('.developer--card__block_link', items[index]).attr('href')}`,
-                        date: result.$('.developer--card__date', items[index]).text().trim(),
-                    }
-                    // console.log(obj);
-                    await DB.insert(obj);
-                }
+                extractHtmlFactors(result, items);
                 page++;
             }
         }
@@ -58,9 +62,7 @@ const roopPages = async () => {
     console.log(`COUNT OF ITEMS: ${countOfItems}`);
 }
 
-const main = async () => {
-    console.log(information_message);
-    await roopPages();
+const outResults = async () => {
     const allData = await DB.cfind({}).projection({
         title: 1,
         url: 1,
@@ -70,6 +72,12 @@ const main = async () => {
     allData.forEach(element => {
         console.log(element);
     });
+}
+
+const main = async () => {
+    console.log(information_message);
+    await roopPages();
+    await outResults();
 }
 
 main();
