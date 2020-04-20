@@ -15,7 +15,9 @@ const launchIPhone = async () => {
     await page.emulate(iPhone);
     await page.goto('https://www.google.com/')
     await page.type('input[name=q]', 'こんにちは', { delay: 50 }) 
-    // await page.click('input[type="submit"]') <- TODO: modify
+    const buttons = await page.$$('button');
+    await buttons[2].click();
+    await page.waitFor(5000);
     await browser.close();
     return;
 }
