@@ -18,6 +18,7 @@ const launchIPhone = async () => {
     const buttons = await page.$$('button');
     await buttons[2].click();
     await page.waitFor(5000);
+    await page.screenshot({path: 'screenShotPage.png'});
     await browser.close();
     return;
 }
