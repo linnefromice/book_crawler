@@ -14,13 +14,17 @@ const launchIPhone = async () => {
     const iPhone = devices['iPhone 6'];
     await page.emulate(iPhone);
     await page.goto('https://www.google.com/')
-    await page.type('input[name=q]', 'こんにちは', { delay: 50 }) 
+    await page.type('input[name=q]', 'Hello World', { delay: 50 }) 
     const buttons = await page.$$('button');
     await buttons[2].click();
-    await page.waitFor(5000);
-    await page.screenshot({path: 'screenShotPage.png'});
+    await page.waitFor(2000);
+    // await page.screenshot({path: 'screenShotPage.png'});
     await browser.close();
     return;
 }
 
-launchIPhone();   
+const main = async () => {
+    launchIPhone();
+}
+
+main();
